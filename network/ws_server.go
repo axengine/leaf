@@ -37,7 +37,7 @@ type WSHandler struct {
 func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	origin := r.Header.Get("Origin")
 	if origin != "" {
-		w.Header().Add("Access-Control-Allow-Origin", "*")
+		w.Header().Add("Access-Control-Allow-Origin", origin)
 		w.Header().Add("Access-Control-Allow-Methods", "GET,OPTIONS")
 		w.Header().Add("Access-Control-Allow-Headers", "*")
 		w.Header().Add("Access-Control-Allow-Credentials", "true")
