@@ -35,6 +35,16 @@ type WSHandler struct {
 }
 
 func (handler *WSHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	origin := r.Header.Get("Origin")
+	if origin != "" {
+		w.Header().Add("Access-Control-Allow-Origin", origin)
+		w.Header().Add("Access-Control-Allow-Methods", "GET,OPTIONS")
+		w.Header().Add("Access-Control-Allow-Headers", "*")
+		w.Header().Add("Access-Control-Allow-Credentials", "true")
+	}
+	if r.Method == "OPTIONS" {
+		return
+	}
 	if r.Method != "GET" {
 		http.Error(w, "Method not allowed", 405)
 		return
