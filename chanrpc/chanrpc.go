@@ -134,6 +134,15 @@ func (s *Server) Exec(ci *CallInfo) {
 	}
 }
 
+func (s *Server) ExecAsync(ci *CallInfo) {
+	go func(ci *CallInfo) {
+		err := s.exec(ci)
+		if err != nil {
+			log.Error("%v", err)
+		}
+	}(ci)
+}
+
 // goroutine safe
 func (s *Server) Go(id interface{}, args ...interface{}) {
 	f := s.functions[id]

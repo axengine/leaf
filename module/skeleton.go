@@ -56,7 +56,7 @@ func (s *Skeleton) Run(closeSig chan bool) {
 		case ri := <-s.client.ChanAsynRet:
 			s.client.Cb(ri)
 		case ci := <-s.server.ChanCall:
-			s.server.Exec(ci)
+			s.server.ExecAsync(ci)
 		case ci := <-s.commandServer.ChanCall:
 			s.commandServer.Exec(ci)
 		case cb := <-s.g.ChanCb:
