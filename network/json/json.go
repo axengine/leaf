@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/axengine/leaf/chanrpc"
 	"github.com/axengine/leaf/log"
+	jsoniter "github.com/json-iterator/go"
 	"reflect"
 )
 
@@ -129,6 +130,7 @@ func (p *Processor) Route(msg interface{}, userData interface{}) error {
 // goroutine safe
 func (p *Processor) Unmarshal(data []byte) (interface{}, error) {
 	var m map[string]json.RawMessage
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	err := json.Unmarshal(data, &m)
 	if err != nil {
 		return nil, err
@@ -168,6 +170,7 @@ func (p *Processor) Marshal(msg interface{}) ([][]byte, error) {
 
 	// data
 	m := map[string]interface{}{msgID: msg}
+	json := jsoniter.ConfigCompatibleWithStandardLibrary
 	data, err := json.Marshal(m)
 	return [][]byte{data}, err
 }
